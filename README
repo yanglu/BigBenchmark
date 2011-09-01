@@ -16,3 +16,6 @@ And
 1.If you want more type of messages, you can modify msgprocessor.py and msg.py
 2.execnet1.09 and argparser python library should be installed on all machines.
 3.The configuration file should at least include system names, client node names, code paths, and how many processes you want to run on each client. 
+
+
+By Yang Lu
