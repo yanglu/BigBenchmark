@@ -20,14 +20,15 @@ class MsgProcessor:
 	'''Main loop'''
 	for item in self._channel:
 	    msg=getMessage(item)
-	    if msg.header == CMD_INIT :
+	    if msg.header == CONFIG :
 		self._config=msg.data
 		self._worker=self.createWorker()
-		self._worker.initialize(self._config,self._channel)
+	    elif msg.header == CMD_INIT :		
+		self._worker.initialize(self._config,self._channel,msg)
 	    elif msg.header == CMD_LOAD :
-		self._worker.startLoading(self._config,self._channel)
+		self._worker.startLoading(self._config,self._channel,msg)
 	    elif msg.header == CMD_EXECUTE :
-		self._worker.startExecution(self._config,self._channel)
+		self._worker.startExecution(self._config,self._channel,msg)
 	    elif msg.header == CMD_STOP :
 		pass
 	    elif msg.header == EMPTY :

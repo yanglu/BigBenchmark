@@ -33,7 +33,7 @@ import argparse
 import glob
 import execnet
 import msgprocessor
-import message
+from message import *
 from ConfigParser import SafeConfigParser
 from pprint import pprint,pformat
 
@@ -52,6 +52,7 @@ class Benchmark:
             cparser = SafeConfigParser()
             cparser.read(os.path.realpath(self._args['config'].name))
             config = dict(cparser.items('configuration'))
+	    
         config['load'] = False
         config['execute'] = False
         print config
@@ -86,17 +87,16 @@ class Benchmark:
 	return klass()
     
     def runBenchmark(self):
-        '''A template method for all benchmarks'''       
-        self._coordinator.initialize(self._config,self._channels)
-        
+        '''A template method for all benchmarks'''
+        for ch in self._channels:
+	    sendMessage(CONFIG,self._config,ch)
+	    
+        self._coordinator.initialize(self._config,self._channels)       
         if not self._args['no_load']:
-	    self._coordinator.distributeLoading(self._config,self._channels)
-	    
+	    self._coordinator.distributeLoading(self._config,self._channels)	    
 	if not self._args['no_execute']:
-	    self._coordinator.distributeExecution(self._config,self._channels)
-	    
-	self._coordinator.showResult(self._config,self._channels)
-	
+	    self._coordinator.distributeExecution(self._config,self._channels)    
+	self._coordinator.showResult(self._config,self._channels)	
 	self._coordinator.moreProcessing(self._config,self._channels)
 	
 

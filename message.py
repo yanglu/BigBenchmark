@@ -36,6 +36,7 @@ CMD_STOP = 4
 INIT_COMPLETED = 5
 LOAD_COMPLETED = 6
 EXECUTE_COMPLETED = 7
+CONFIG = 8
 
 def sendMessage(msg,data,channel):
     '''serialize the data and send the msg through channel'''
